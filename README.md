@@ -1,14 +1,26 @@
 # paperstore
-=====
 
-An OTP application
+create project
+```
+rebar3 new app name=paperstore
+```
 
-Build
------
+edit the rebar.config, 
 
-    $ rebar3 compile
+install postgres
+
+build the database file
+```
+escript src/paperstore_init.erl
+```
+
+write your code in `/src` and `/test`
+
+test
+```
+rebar3 proper
+```
 
 TODO:
-sql
-rules
+- add rules
 
