@@ -5,14 +5,14 @@
         find_paper_locked/0, find_paper_unlocked/0]).
 
 setup() ->
-    run_query(setup_paper_store, []).
+    run_query(setup_table_papers, []).
 
 teardown() ->
-    run_query(teardown_paper_store, []).
+    run_query(teardown_table_papers, []).
 
 %% add a new paper to the inventory, with no lock
 add_paper(DOI, Title, Author) ->
-    add_paper(DOI, Title, Author, false, 0, "example.pdf").
+    add_paper(DOI, Title, Author, false, 0, <<"example.pdf">>).
 
 add_paper(DOI, Title, Author, Lock, Price, Link) ->
     BinTitle = unicode:characters_to_binary(Title),
@@ -59,8 +59,6 @@ find_paper_by_doi(DOI) ->
 find_paper_by_link(Link) ->
     handle_select(run_query(find_by_link, [Link])).
 
-
-
 handle_select({{select, _}, List}) -> {ok, List};
 handle_select(Error) -> Error.
 
@@ -99,7 +97,7 @@ connect(Args) ->
     end.
 
 close(Conn) ->
-    pgsql_connection:clsoe(Conn).
+    pgsql_connection:close(Conn).
 
 %% load the queries from queries.sql
 load_queries() ->

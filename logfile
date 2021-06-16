@@ -5,3 +5,80 @@
 2021-06-09 10:47:46.622 CEST [16532] WARNING:  could not create listen socket for "localhost"
 2021-06-09 10:47:46.622 CEST [16532] FATAL:  could not create any TCP/IP sockets
 2021-06-09 10:47:46.622 CEST [16532] LOG:  database system is shut down
+2021-06-15 14:17:28.304 CEST [10028] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:17:28.304 CEST [10028] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:17:28.305 CEST [10028] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:17:28.305 CEST [10028] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:17:28.305 CEST [10028] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:17:28.305 CEST [10028] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:17:28.306 CEST [10028] LOG:  database system is shut down
+2021-06-15 14:18:24.135 CEST [684] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:18:24.135 CEST [684] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:18:24.135 CEST [684] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:18:24.135 CEST [684] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:18:24.135 CEST [684] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:18:24.136 CEST [684] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:18:24.137 CEST [684] LOG:  database system is shut down
+2021-06-15 14:20:32.956 CEST [21228] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:20:32.956 CEST [21228] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:20:32.957 CEST [21228] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:20:32.957 CEST [21228] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:20:32.957 CEST [21228] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:20:32.957 CEST [21228] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:20:33.066 CEST [21228] LOG:  database system is shut down
+2021-06-15 14:21:27.403 CEST [7820] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:21:27.403 CEST [7820] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:21:27.403 CEST [7820] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:21:27.403 CEST [7820] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:21:27.403 CEST [7820] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:21:27.404 CEST [7820] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:21:27.404 CEST [7820] LOG:  database system is shut down
+2021-06-15 14:29:01.552 CEST [10484] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:29:01.552 CEST [10484] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:29:01.553 CEST [10484] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:29:01.553 CEST [10484] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:29:01.553 CEST [10484] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:29:01.553 CEST [10484] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:29:01.556 CEST [10484] LOG:  database system is shut down
+2021-06-15 14:30:17.561 CEST [15196] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:30:17.561 CEST [15196] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:30:17.562 CEST [15196] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:30:17.562 CEST [15196] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:30:17.562 CEST [15196] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:30:17.562 CEST [15196] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:30:17.563 CEST [15196] LOG:  database system is shut down
+2021-06-15 14:30:50.276 CEST [10044] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 14:30:50.276 CEST [10044] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:30:50.277 CEST [10044] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 14:30:50.277 CEST [10044] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 14:30:50.277 CEST [10044] WARNING:  could not create listen socket for "localhost"
+2021-06-15 14:30:50.277 CEST [10044] FATAL:  could not create any TCP/IP sockets
+2021-06-15 14:30:50.278 CEST [10044] LOG:  database system is shut down
+2021-06-15 16:20:12.382 CEST [12532] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 16:20:12.382 CEST [12532] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 16:20:12.382 CEST [12532] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 16:20:12.382 CEST [12532] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 16:20:12.382 CEST [12532] WARNING:  could not create listen socket for "localhost"
+2021-06-15 16:20:12.382 CEST [12532] FATAL:  could not create any TCP/IP sockets
+2021-06-15 16:20:12.382 CEST [12532] LOG:  database system is shut down
+2021-06-15 16:21:01.825 CEST [12568] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-15 16:21:01.825 CEST [12568] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 16:21:01.825 CEST [12568] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-15 16:21:01.825 CEST [12568] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-15 16:21:01.825 CEST [12568] WARNING:  could not create listen socket for "localhost"
+2021-06-15 16:21:01.825 CEST [12568] FATAL:  could not create any TCP/IP sockets
+2021-06-15 16:21:01.826 CEST [12568] LOG:  database system is shut down
+2021-06-16 00:20:36.815 CEST [11692] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-16 00:20:36.815 CEST [11692] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-16 00:20:36.815 CEST [11692] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-16 00:20:36.815 CEST [11692] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-16 00:20:36.815 CEST [11692] WARNING:  could not create listen socket for "localhost"
+2021-06-16 00:20:36.815 CEST [11692] FATAL:  could not create any TCP/IP sockets
+2021-06-16 00:20:36.816 CEST [11692] LOG:  database system is shut down
+2021-06-16 00:21:02.666 CEST [17184] LOG:  could not bind IPv6 address "::1": Permission denied
+2021-06-16 00:21:02.666 CEST [17184] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-16 00:21:02.666 CEST [17184] LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
+2021-06-16 00:21:02.666 CEST [17184] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2021-06-16 00:21:02.666 CEST [17184] WARNING:  could not create listen socket for "localhost"
+2021-06-16 00:21:02.666 CEST [17184] FATAL:  could not create any TCP/IP sockets
+2021-06-16 00:21:02.667 CEST [17184] LOG:  database system is shut down

@@ -1,20 +1,19 @@
--- :setup_paper_store
+-- :setup_table_papers
 CREATE TABLE papers (
-    doi varchar(40) PRIMARY KEY
+    doi varchar(40) PRIMARY KEY,
     title varchar(256) NOT NULL,
     author varchar(256) NOT NULL,
-    lock boolean,
-    price int,
+    lock boolean DEFAULT false,
+    price int DEFAULT 0,
     link varchar(256)
 );
 
--- :teardown_paper_store
+-- :teardown_table_papers
 DROP TABLE papers;
 
--- add a paper
 -- :add_paper
-INSERT INTO papers  (doi, title, author)
-    VALUES          ($1,  $2,   $3);
+INSERT INTO papers  (doi, title, author, lock, price, link)
+    VALUES          ($1,  $2,   $3,     $4,    $5,    $6);
 
 -- :find_by_author
 SELECT * FROM papers WHERE author LIKE $1;

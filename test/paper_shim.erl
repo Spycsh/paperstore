@@ -17,7 +17,7 @@ find_paper_by_author_unknown(Author) ->
     paperstore_db:find_paper_by_author(Author).
 
 find_paper_by_title_matching(Author) ->
-    paperstore_db:find_paper_by_author(Author).
+    paperstore_db:find_paper_by_title(Author).
 find_paper_by_title_unknown(Author) ->
-    paperstore_db:find_paper_by_author(Author).
+    paperstore_db:find_paper_by_title(Author).
 

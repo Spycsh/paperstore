@@ -17,14 +17,12 @@ prop_test() ->
             paperstore_db:teardown(),
             ?WHENFAIL(io:format("History: ~p\nState: ~p\nResult: ~p\n",
                             [History, State, Result]), aggregate(command_names(Cmds), Result =:= ok))
-        end)
-        
-    ).
+        end).
 
 prop_parallel() ->
-    ?ALL(Cmds, commands(?MODULE),
+    ?ALL(Cmds, parallel_commands(?MODULE),
         begin
-            papaerstore_db:setup(),
+            paperstore_db:setup(),
             {History, State, Result} = run_parallel_commands(?MODULE, Cmds),
             paperstore_db:teardown(),
             ?WHENFAIL(io:format("=======~n"
@@ -35,8 +33,7 @@ prop_parallel() ->
                                 "History: ~p~n",
                                 [Cmds, State,Result,History]),
                       aggregate(command_names(Cmds), Result =:= ok))
-        end)
-    ).
+        end).
 
 %% Initial model value at system start. Should be deterministic
 initial_state() -> #{}.
@@ -47,21 +44,22 @@ command(State) ->
     AlwaysPossible = [
         % firstly add a paper 
         % and then find a random unknown paper which is not matched to the added paper
-        {call, paper_shim, add_paper_new, [doi(), title(), author(), false, 0, "example.pdf"]},
-        {call, paper_shim, find_paper_by_doi, [doi()]},
-        {call, paper_shim, find_paper_by_title_unknown, [title()]},
-        {call, paper_shim, find_paper_by_author_unknown, [author()]}
+        {call, paper_shim, add_paper_new, [doi(), title(), author(), false, 0, <<"example.pdf">>]},
+        {call, paper_shim, find_paper_by_doi_unknown, [doi()]},
+        
+        {call, paper_shim, find_paper_by_author_unknown, [author()]},
+        {call, paper_shim, find_paper_by_title_unknown, [title()]}
     ],
     ReliesOnState = case maps:size(State) of
         0 ->
             [];
         _ ->
             S = State,
-            [{call, paper_shim, add_paper_existing,
-                [doi(S), title(), author(), false, 0, "example.pdf"]},
+            [{call, paper_shim, add_paper_existing, [doi(S), title(), author(), false, 0, <<"example.pdf">>]},
              {call, paper_shim, find_paper_by_doi_exists, [doi(S)]},
-             {call, paper_shim, find_paper_by_title_matching, title(S)},
-             {call, paper_shim, find_paper_by_author_matching, author(S)}]
+             {call, paper_shim, find_paper_by_author_matching, [author(S)]},
+             {call, paper_shim, find_paper_by_title_matching, [title(S)]}]
+             
     end,
     oneof(AlwaysPossible ++ ReliesOnState).
 
@@ -71,15 +69,15 @@ precondition(S, {call, _, add_paper_new, [DOI|_]}) ->
     not has_doi(S, DOI);
 precondition(S, {call, _, find_paper_by_doi_unknown, [DOI]}) ->
     not has_doi(S, DOI);
-precondition(S, {call, _, find_paper_by_author_unknown, [Author]}) ->
-    not like_author(S, Author);
-precondition(S, {call, _, find_paper_by_title_unknown, [Title]}) ->
-    not like_title(S, Title);
 precondition(S, {call, _, find_paper_by_author_matching, [Author]}) ->
     like_author(S, Author);
 precondition(S, {call, _, find_paper_by_title_matching, [Title]}) ->
     like_title(S, Title);
-precondition(S, {call, _Mod, _Fun, [DOI|_]})
+precondition(S, {call, _, find_paper_by_author_unknown, [Author]}) ->
+    not like_author(S, Author);
+precondition(S, {call, _, find_paper_by_title_unknown, [Title]}) ->
+    not like_title(S, Title);
+precondition(S, {call, _Mod, _Fun, [DOI|_]}) ->
     has_doi(S, DOI).
 
 %% whether the result of the call {call, Mod, Fun, Args}
@@ -94,16 +92,17 @@ postcondition(S, {_, _, find_paper_by_doi_exists, [DOI]}, {ok, [Res]}) ->
 postcondition(_, {_, _, find_paper_by_doi_unknown, _}, {ok, []}) ->
     true;
 postcondition(S, {_, _, find_paper_by_author_matching, [Auth]}, {ok,Res}) ->
-    Map = maps:filter(fun(_, {_,_,A,_,_}) ->
+    Map = maps:filter(fun(_, {_,_,A,_,_,_}) ->  %% DOI,Title,Author,Lock,Price,Link
                               nomatch =/= string:find(A, Auth)
                       end, S),
     papers_equal(lists:sort(Res), lists:sort(maps:values(Map)));
 postcondition(_, {_, _, find_paper_by_author_unknown, _}, {ok, []}) ->
     true;
 postcondition(S, {_, _, find_paper_by_title_matching, [Title]}, {ok,Res}) ->
-    Map = maps:filter(fun(_, {_,T,_,_,_}) ->
+    Map = maps:filter(fun(_, {_,T,_,_,_,_}) ->
                              nomatch =/= string:find(T, Title)
                       end, S),
+    % io:format("----{~p}---", [Res]), % print out the found records from DB
     papers_equal(lists:sort(Res), lists:sort(maps:values(Map)));
 postcondition(_, {_, _, find_paper_by_title_unknown, _}, {ok, []}) ->
     true;
@@ -112,18 +111,28 @@ postcondition(_State, {call, _Mod, _Fun, _Args}, _Res) ->
               [_Mod, _Fun, _Args, _Res]),
     false.
 
+%% Assumning the postcondition for a call was true
+%% update the model accordingly for the test to proceed
+%% the State will be a map of DOI => {DOI, Title, Author, Lock, Price, Link}
+next_state(State, _, {call, _, add_paper_new,
+            [DOI, Title, Author, Lock, Price, Link]}) ->
+        State#{DOI => {DOI, Title, Author, Lock, Price, Link}};
+next_state(State, _Res, {call, _Mod, _Fun, _Args}) ->
+    NewState = State,
+    NewState.
+
 %%%%%%%%%%%%%%%
 %%% Helpers %%%
 %%%%%%%%%%%%%%%
 has_doi(Map, DOI) ->
-    map:is_key(DOI, Map).
+    maps:is_key(DOI, Map).
 
 like_author(Map, Auth) ->
-    lists:any(fun({_,_,A,_,_}) -> nomatch =/= string:find(A, Auth) end,
+    lists:any(fun({_,_,A,_,_,_}) -> nomatch =/= string:find(A, Auth) end,
               maps:values(Map)).
 
 like_title(Map, Title) ->
-    lists:any(fun({_,T,_,_,_}) -> nomatch =/= string:find(T, Title) end,
+    lists:any(fun({_,T,_,_,_,_}) -> nomatch =/= string:find(T, Title) end,
               maps:values(Map)).
 
 papers_equal([], []) ->
@@ -152,7 +161,7 @@ friendly_unicode() ->
                       nomatch =:= string:find(S, "\\") andalso
                       nomatch =:= string:find(S, "_") andalso
                       nomatch =:= string:find(S, "%") andalso
-                      string:length(S) < 256),
+                      string:length(S) < 256), 
          elements([X, unicode:characters_to_binary(X)])).
 
 % 10.1000/123
@@ -161,17 +170,17 @@ doi() ->
          ["10.",
           ?LET(X, range(1000,9999), integer_to_list(X)),
           "/",
-          any()]
+          ?LET(X, range(1000,9999), integer_to_list(X))],
          iolist_to_binary(DOI)).
 
 doi(State) ->
     elements(maps:keys(State)).
 
 author(State) ->
-    elements([partial(Author) || {_,_,Author,_,_} <- maps:values(State)]).
+    elements([partial(Author) || {_,_,Author,_,_,_} <- maps:values(State)]).
 
 title(State) ->
-    elements([partial(Title) || {_,Title,_,_,_} <- maps:values(State)]).
+    elements([partial(Title) || {_,Title,_,_,_,_} <- maps:values(State)]).
 
 %% Create a partial string, built from a portion of a complete one.
 partial(String) ->

@@ -17,7 +17,7 @@ main(_) ->
     timer:sleep(5000), % wait and pray!
 
     io:format("setting up 'paperstore_db' database...~n"),
-    cmd("psql -h localhost -d template1 -c "
+    cmd("psql -U postgres -h localhost -d template1 -c "
         "\"CREATE DATABASE paperstore_db;\""),
     io:format("OK.~n"),
     init:stop().
